@@ -1,0 +1,46 @@
+header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid red;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  row-gap: 35px;
+  border: 1px solid red;
+}
+
+.concert {
+  width: 80%;
+  border: 1px solid red;
+  overflow: hidden;
+  border-radius: 15px;
+
+  display: flex;
+}
+
+.concert__head {
+  border: 1px solid blue;
+}
+
+.concert__body {
+  border: 1px solid blue;
+}
+
+.concert__actions {
+  border: 1px solid blue;
+}
+
+footer {
+  width: 100%;
+  height: 100px;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
