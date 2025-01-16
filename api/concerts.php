@@ -5,7 +5,7 @@ function getConcerts()
 {
     $conn = Conn::getInstance()->getConn();
 
-    $query = 'SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets
+    $query = 'SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets, c.imgUrl
               FROM concerts c
               JOIN bands b ON c.band_id = b.id
               WHERE c.available_tickets > 0';

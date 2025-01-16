@@ -1,10 +1,11 @@
 function addConcertCard(
-  title,
-  description,
-  imageUrl,
-  lastUpdated,
-  buttonText,
-  buttonLink
+  id,
+  concert_name,
+  band_name,
+  date,
+  location,
+  available_tickets,
+  imageUrl
 ) {
   const concertsDiv = document.getElementById("concerts");
 
@@ -14,14 +15,15 @@ function addConcertCard(
             <div class="card">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="${imageUrl}" class="img-fluid rounded-start" alt="${title}">
+                        <img src="http://localhost:8000/${imageUrl}" class="img-fluid rounded-start" alt="${concert_name}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${title}</h5>
-                            <p class="card-text">${description}</p>
-                            <p class="card-text"><small class="text-body-secondary">${lastUpdated}</small></p>
-                            <a href="${buttonLink}" class="btn btn-primary">${buttonText}</a>
+                            <h5 class="card-title">${concert_name}</h5>
+                            <p class="card-text">${location} ${date}</p>
+                            <p class="card-text"><small class="text-body-secondary">Available Tickets: ${available_tickets}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">${band_name}</small></p>
+                            <a href="${id}" class="btn btn-primary">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -33,30 +35,11 @@ function addConcertCard(
   concertsDiv.innerHTML += cardHTML;
 }
 
-// Example usage: Add a few cards dynamically
-addConcertCard(
-  "Rock Festival",
-  "Join us for an amazing rock concert with top bands performing live!",
-  "https://placehold.co/200x300",
-  "Last updated 3 mins ago",
-  "Buy Tickets",
-  "#"
-);
-
-addConcertCard(
-  "Jazz Night",
-  "Experience the best jazz performances in town. Don't miss out!",
-  "https://placehold.co/200x300",
-  "Last updated 1 hour ago",
-  "Buy Tickets",
-  "#"
-);
-
 // Create a new XMLHttpRequest object
 const xhr = new XMLHttpRequest();
 
 // Configure the request
-xhr.open("GET", "http://localhost/concerts", true);
+xhr.open("GET", "http://localhost:8000/api/concerts", true);
 
 // Set up a callback to handle the response
 xhr.onload = function () {
@@ -66,12 +49,13 @@ xhr.onload = function () {
 
     concerts.forEach((concert) => {
       addConcertCard(
-        concert.name,
-        "dada",
-        "addadd",
-        "dawdaw",
-        "dadawa",
-        "daadaw"
+        concert.id,
+        concert.concert_name,
+        concert.band_name,
+        concert.date,
+        concert.location,
+        concert.available_tickets,
+        concert.imgUrl
       );
       //listItem.textContent = `${concert.name} - ${concert.date} at ${concert.location} (${concert.available_tickets} tickets left)`;
     });
