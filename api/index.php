@@ -122,7 +122,7 @@ switch (true) {
     case preg_match('#^/api/book$#', $request):
         if ($method === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
-            $success = bookConcert($data['user_id'], $data['concert_id']);
+            $success = bookConcert($data['user_id'], $data['concert_id'], $data['quantity']);
             echo json_encode(['success' => $success]);
         }
         break;

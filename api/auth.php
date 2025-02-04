@@ -1,5 +1,5 @@
 <?php
-require_once '../config/Conn.php';
+require_once './config/Conn.php';
 
 function register($name, $surname, $email, $password)
 {
