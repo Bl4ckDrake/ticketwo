@@ -1,5 +1,5 @@
 <?php
-require_once '../config/Conn.php';
+require_once './config/Conn.php';
 
 function register($name, $surname, $email, $password)
 {
@@ -23,7 +23,7 @@ function login($email, $password)
     $user = $result->fetch_assoc();
 
     if ($user && password_verify($password, $user['password'])) {
-        return $user;
+        return $user['id'];
     }
 
     return null;

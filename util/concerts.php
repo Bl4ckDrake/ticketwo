@@ -1,11 +1,11 @@
 <?php
-require_once '../config/Conn.php';
+require_once './config/Conn.php';
 
 function getConcerts()
 {
     $conn = Conn::getInstance()->getConn();
 
-    $query = 'SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets, c.imgUrl
+    $query = 'SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets, c.imgUrl AS image_url
               FROM concerts c
               JOIN bands b ON c.band_id = b.id
               WHERE c.available_tickets > 0';
@@ -18,7 +18,7 @@ function getConcert($id)
 {
     $conn = Conn::getInstance()->getConn();
 
-    $stmt = $conn->prepare('SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets, c.total_tickets
+    $stmt = $conn->prepare('SELECT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.available_tickets, c.total_tickets, c.imgUrl AS image_url
                             FROM concerts c
                             JOIN bands b ON c.band_id = b.id
                             WHERE c.id = ?');
@@ -34,7 +34,7 @@ function searchConcerts($query)
     $conn = Conn::getInstance()->getConn();
     $search = '%' . $query . '%';
 
-    $stmt = $conn->prepare('SELECT DISTINCT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location
+    $stmt = $conn->prepare('SELECT DISTINCT c.id, c.name AS concert_name, b.name AS band_name, c.date, c.location, c.imgUrl AS image_url
                             FROM concerts c
                             JOIN bands b ON c.band_id = b.id
                             LEFT JOIN band_artists ba ON b.id = ba.band_id
