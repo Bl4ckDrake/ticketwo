@@ -26,7 +26,11 @@ $bookingId = $_GET['id']; // Assuming the ID is passed as a query parameter
 </head>
 
 <body>
+
     <h1>Concert Ticket</h1>
+    <button class="btn btn-primary" onclick="window.print()">Print</button>
+
+
 
     <?php
     // Include the bookings utility file
@@ -52,16 +56,14 @@ $bookingId = $_GET['id']; // Assuming the ID is passed as a query parameter
                         <h5 class="card-title"><?php echo $booking['concert_name']; ?></h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo $booking['date']; ?></h6>
                         <p class="card-text"><?php echo $booking['location']; ?></p>
-                        <p class="card-text"><?php echo $booking['quantity']; ?></p>
+                        <p class="card-text">Quantità: <?php echo $booking['quantity']; ?></p>
                     </div>
                 </div>
-                <div class="col-md-4 d-flex align-items-center">
-                    <img src="<?php echo $qrCodeUrl; ?>" alt="QR Code" style="width: 50%;">
+                <div class="col-md-4 d-flex align-items-center justify-content-right">
+                    <img src="<?php echo $qrCodeUrl; ?>" alt="QR Code" style="height: 75%;">
                 </div>
             </div>
         </div>
-
-        <button class="btn btn-primary" onclick="window.print()">Print</button>
     <?php
     } else {
         echo "<p>Booking not found.</p>";

@@ -104,7 +104,7 @@ session_start();
             var userId = "<?php echo $_SESSION['user']; ?>";
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', `http://localhost:3000/api/book.php?quantity=${ticketQuantity}&concert_id=${concertId}&user_id=${userId}`, true);
+            xhr.open('POST', `./api/book.php?quantity=${ticketQuantity}&concert_id=${concertId}&user_id=${userId}`, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
