@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -11,6 +15,8 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
@@ -18,7 +24,7 @@
     <main class="row d-flex justify-content-center align-items-center w-100">
         <?php
         // Include the concerts.php file
-        require_once './api/concerts.php';
+        require_once './util/concerts.php';
 
         // Get the concert ID from the URL
         $concertId = $_GET['id'];
@@ -40,10 +46,14 @@
                         <form>
                             <div class="form-group">
                                 <label for="ticketQuantity">Number of Tickets:</label>
-                                <input type="number" class="form-control" id="ticketQuantity" name="ticketQuantity" min="1" max="10" required>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button id="ticketQuantityDown" type="button" class="btn btn-primary">-</button>
+                                    <button type="button" id="ticketQuantity" class="btn btn-primary">0</button>
+                                    <button id="ticketQuantityUp" type="button" class="btn btn-primary">+</button>
+                                </div>
                             </div>
                             <input type="hidden" name="concertId" value="<?php echo $concertId; ?>">
-                            <button type="button" class="btn btn-primary">Book Tickets</button>
+                            <button type="button" class="btn btn-primary" id="bookTicket" disabled>Book Tickets</button>
                         </form>
                     </div>
                 </div>
@@ -55,28 +65,52 @@
         ?>
     </main>
 
+
+
     <?php include 'components/concert_card/Footer.php'; ?>
 
     <script>
-        document.querySelector('button').addEventListener('click', function() {
-            <?php
-            if (!isset($_SESSION['user_id'])) {
-                echo 'window.location.href = "./login.php";return;';
-                exit;
+        var quantity = 0;
+        document.getElementById("ticketQuantityDown").addEventListener('click', () => {
+            if (quantity > 0) {
+                quantity--;
             }
-            ?>
 
-            var ticketQuantity = document.querySelector('#ticketQuantity').value;
-            var concertId = document.querySelector('input[name="concertId"]').value;
-            var userId = <?php echo $_SESSION['user_id']; ?>;
+            if (quantity === 0) {
+                document.getElementById("bookTicket").disabled = true;
+            } else {
+                document.getElementById("bookTicket").disabled = false;
+            }
+
+            document.getElementById("ticketQuantity").innerText = quantity;
+        });
+
+
+
+        document.getElementById("ticketQuantityUp").addEventListener('click', () => {
+            if (quantity < 10) {
+                quantity++;
+            }
+
+            document.getElementById("bookTicket").disabled = false;
+
+            document.getElementById("ticketQuantity").innerText = quantity;
+        });
+
+        document.getElementById("bookTicket").addEventListener('click', function(e) {
+            e.preventDefault();
+            var ticketQuantity = document.getElementById("ticketQuantity").innerText;
+            var concertId = "<?php echo $_GET['id']; ?>";
+            var userId = "<?php echo $_SESSION['user']; ?>";
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', `http://localhost:8000/api/book?quantity=${ticketQuantity}&concert_id=${concertId}&user_id=${userId}`, true);
+            xhr.open('POST', `http://localhost:3000/api/book.php?quantity=${ticketQuantity}&concert_id=${concertId}&user_id=${userId}`, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     // Handle the response here
+                    window.location.href = `./ticket.php?id=${response.booking_id}`;
                 }
             };
             xhr.send(JSON.stringify({
@@ -84,9 +118,10 @@
                 ticketQuantity: ticketQuantity,
             }));
 
-            window.location.href = `./checkout.php?concertId=${concertId}&ticketQuantity=${ticketQuantity}`;
+
         });
     </script>
 </body>
+
 
 </html>

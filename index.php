@@ -1,7 +1,7 @@
 <?php
 session_start();
 ?>
-<html lang="en">
+<html lang="it">
 
 <head>
     <link rel="stylesheet" href="css/reset.css" />
@@ -21,7 +21,7 @@ session_start();
         class="row d-flex justify-content-center align-items-center w-100"
         id="concerts">
         <?php
-        require_once 'api/concerts.php';
+        require_once 'util/concerts.php';
 
         if (isset($_POST['search']) && !empty($_POST['search'])) {
             $concerts = searchConcerts($_POST['search']);

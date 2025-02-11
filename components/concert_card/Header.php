@@ -32,7 +32,6 @@ session_start();
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="./dashboard.php">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="./favourites.php">Favourites</a></li>
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>

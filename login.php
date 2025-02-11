@@ -2,7 +2,7 @@
 session_start();
 if (isset($_POST['login'])) {
     // Login logic
-    require_once './api/auth.php';
+    require_once './util/auth.php';
     $user = login($_POST['email'], $_POST['password']);
 
     if ($user != null) {
@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
 
 if (isset($_POST['register'])) {
     // Register logic
-    require_once './api/auth.php';
+    require_once './util/auth.php';
 
     $register = register($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['password']);
 
